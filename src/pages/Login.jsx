@@ -20,7 +20,7 @@ const Login = () => {
     } else if (!(await validar.sesion(user, password))) {
       setMensaje("Usuario o contraseña no coinciden");
     } else {
-      sessionStorage.setItem("id", await validar.sesion(user, password));
+      sessionStorage.setItem("sessionId", await validar.sesion(user, password));
       setMensaje("Redireccionando...");
       setTimeout(() => {
         navigate("/");
