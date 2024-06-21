@@ -38,4 +38,14 @@ export const validar = {
     });
     return userReg;
   },
+  sesion: async (user, password) => {
+    let result = null;
+    const data = await getData();
+    data.forEach((e) => {
+      if (e.user === user && e.password === password) {
+        result = e.id;
+      }
+    });
+    return result;
+  },
 };
