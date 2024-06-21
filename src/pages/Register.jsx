@@ -11,7 +11,7 @@ const Register = () => {
   const inputUser = useRef();
   const inputPassword = useRef();
 
-  const registro = async (user, password) => {
+  const signUp = async (user, password) => {
     if (validar.vacio(user, password)) {
       setMensaje("Debe llenar todos los campos");
     } else if (validar.espacios(user, password)) {
@@ -44,7 +44,7 @@ const Register = () => {
         <div>{mensaje}</div>
         <Button
           foo={() =>
-            registro(inputUser.current.value, inputPassword.current.value)
+            signUp(inputUser.current.value, inputPassword.current.value)
           }
           txt="Registrarse"
         />
