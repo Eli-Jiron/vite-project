@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3000/api/users/";
+const apiUrl = "http://localhost:3000/users/";
 
 //Metodo POST
 export const postData = async (userData) => {
@@ -14,6 +14,7 @@ export const postData = async (userData) => {
     return data;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
@@ -25,6 +26,7 @@ export const getData = async (id = "") => {
     return data;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
@@ -42,6 +44,7 @@ export const putData = async (id, newData) => {
     return data;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };
 
@@ -55,5 +58,6 @@ export const deleteData = async (id) => {
     return data;
   } catch (error) {
     console.log(error);
+    return null;
   }
 };

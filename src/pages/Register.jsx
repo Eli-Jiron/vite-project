@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validar } from "../js/validaciones.js";
 import { postData } from "../js/fetch.js";
+import uuid from "react-uuid";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
@@ -25,6 +26,7 @@ const Register = () => {
         user: user,
         password: password,
         tasks: [],
+        id: uuid(),
       };
       await postData(dataReg);
       setMensaje("Se ha registrado");

@@ -12,9 +12,8 @@ export const validar = {
   },
   espacios: (...inputs) => {
     let result = false;
-    const valEspacio = /^\S*$/;
     inputs.forEach((e) => {
-      if (!valEspacio.test(e)) {
+      if (!/^\S*$/.test(e)) {
         result = true;
       }
     });
@@ -22,8 +21,7 @@ export const validar = {
   },
   username: (input) => {
     let result = false;
-    const valCaracter = /^[A-Za-z0-9._]+$/;
-    if (!valCaracter.test(input)) {
+    if (!/^[A-Za-z0-9._]+$/.test(input)) {
       result = true;
     }
     return result;
@@ -39,13 +37,13 @@ export const validar = {
     return userReg;
   },
   sesion: async (user, password) => {
-    let result = null;
+    let userReg = null;
     const data = await getData();
     data.forEach((e) => {
       if (e.user === user && e.password === password) {
-        result = e.id;
+        userReg = e.id;
       }
     });
-    return result;
+    return userReg;
   },
 };
