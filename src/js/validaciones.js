@@ -1,5 +1,3 @@
-import { getData } from "./fetch.js";
-
 export const validar = {
   vacio: (...inputs) => {
     let result = false;
@@ -12,9 +10,17 @@ export const validar = {
   },
   espacios: (...inputs) => {
     let result = false;
-    const valEspacio = /^\S*$/;
     inputs.forEach((e) => {
-      if (!valEspacio.test(e)) {
+      if (!/^\S*$/.test(e)) {
+        result = true;
+      }
+    });
+    return result;
+  },
+  email: (...inputs) => {
+    let result = false;
+    inputs.forEach((e) => {
+      if (!/^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/.test(e)) {
         result = true;
       }
     });
@@ -22,30 +28,9 @@ export const validar = {
   },
   username: (input) => {
     let result = false;
-    const valCaracter = /^[A-Za-z0-9._]+$/;
-    if (!valCaracter.test(input)) {
+    if (!/^[A-Za-z0-9._]+$/.test(input)) {
       result = true;
     }
-    return result;
-  },
-  usuario: async (user) => {
-    let userReg = false;
-    const data = await getData();
-    data.forEach((e) => {
-      if (user === e.user) {
-        userReg = true;
-      }
-    });
-    return userReg;
-  },
-  sesion: async (user, password) => {
-    let result = null;
-    const data = await getData();
-    data.forEach((e) => {
-      if (e.user === user && e.password === password) {
-        result = e.id;
-      }
-    });
     return result;
   },
 };

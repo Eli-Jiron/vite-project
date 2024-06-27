@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validar } from "../js/validaciones.js";
-import { postData } from "../js/fetch.js";
+import { getData, postData } from "../js/fetch.js";
+import uuid from "react-uuid";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
@@ -17,20 +18,24 @@ const Register = () => {
     } else if (validar.espacios(user, password)) {
       setMensaje("No ingrese espacios");
     } else if (validar.username(user)) {
-      setMensaje("Nombre de usuario no valido ( A-z, números, '.' o '_' )");
-    } else if (await validar.usuario(user)) {
-      setMensaje("El nombre de usuario no está disponible");
+      setMensaje("Nombre de usuario no valido ( letras, números, . y _ )");
     } else {
-      let dataReg = {
-        user: user,
-        password: password,
-        tasks: [],
-      };
-      await postData(dataReg);
-      setMensaje("Se ha registrado");
-      setTimeout(() => {
-        navigate("/login");
-      }, 1000);
+      const promise = await getData();
+      let data = promise.find((e) => e.user === user);
+      if (data) {
+        setMensaje("Nombre de usuario no disponible");
+      } else {
+        await postData({
+          user: user,
+          password: password,
+          tasks: [],
+          id: uuid(),
+        });
+        setMensaje("Se ha registrado");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
+      }
     }
   };
 

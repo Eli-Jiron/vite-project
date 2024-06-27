@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { validar } from "../js/validaciones.js";
+import { getData } from "../js/fetch.js";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [mensaje, setMensaje] = useState();
@@ -16,15 +17,21 @@ const Login = () => {
     } else if (validar.espacios(user, password)) {
       setMensaje("No ingrese espacios");
     } else if (validar.username(user)) {
-      setMensaje("Nombre de usuario no valido ( A-z, números, '.' o '_' )");
-    } else if (!(await validar.sesion(user, password))) {
-      setMensaje("Usuario o contraseña no coinciden");
+      setMensaje("Nombre de usuario no valido ( letras, números, . y _ )");
     } else {
-      sessionStorage.setItem("sessionId", await validar.sesion(user, password));
-      setMensaje("Redireccionando...");
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
+      const promise = await getData();
+      let data = promise.find(
+        (e) => e.user === user && e.password === password
+      );
+      if (!data) {
+        setMensaje("Usuario o contraseña no coinciden");
+      } else {
+        setMensaje("Redireccionando...");
+        setTimeout(() => {
+          sessionStorage.setItem("sessionId", data.id);
+          navigate("/");
+        }, 1000);
+      }
     }
   };
 
